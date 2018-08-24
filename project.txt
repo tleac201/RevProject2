@@ -1,0 +1,16 @@
+Pizza place
+
+Customers are users
+Register & signup
+Shopping cart
+order standardized menu items
+	Salad
+	bread sticks
+	pizza
+	pop
+	etc
+order custom pizza
+	based on custom pizza
+		Price based on additional toppings.
+		I.e. each topping has a price, adding and removing up to, but not 				including the base pizza's price will affect the custom pizzas price.
+

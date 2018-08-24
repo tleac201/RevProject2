@@ -1,0 +1,33 @@
+x marks done
+/Account
+	logon		
+	logoff				x
+	register			x
+
+/CustomPizza
+	add ingredient
+	subtract ingredient
+	add to shopping cart?
+	add n to shopping cart?
+	c
+	r
+	u
+	d (set inactive)
+	cancel (set inactive)?
+
+/Standard item
+	add quantity to cart
+	add single to cart
+
+/Shopping cart
+	remove item
+	remove n items
+	proceed to order
+	Retrieve
+
+/Order
+	pay? (needs to add delivery fees)
+	set delivery (carry out or delivery)
+	Cancel (return items to shopping cart)
+	Cancel selected items
+	order
