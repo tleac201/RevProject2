@@ -18,16 +18,19 @@ x marks done
 /Standard item
 	add quantity to cart
 	add single to cart
+	Retrieve items by group (pop, pizza, sides)
 
 /Shopping cart
 	remove item
 	remove n items
 	proceed to order
-	Retrieve
+	Retrieve all active
 
 /Order
 	pay? (needs to add delivery fees)
 	set delivery (carry out or delivery)
-	Cancel (return items to shopping cart)
+	Cancel (return all items to shopping cart)
 	Cancel selected items
 	order
+	retrieve orders
+	retrieve single orders
