@@ -18,7 +18,7 @@ namespace Project2.Tests.DAL
             /*
              _users.Add(new User
              {
-                 Id = ,
+                 UserId = ,
                  Active = ,
                  OpenDate = ,
                  CloseDate = ,
@@ -54,7 +54,7 @@ namespace Project2.Tests.DAL
 
         public User RetrieveById(int id)
         {
-            return _users.ToList().Find(user => user.Id == id);
+            return _users.ToList().Find(user => user.UserId == id);
         }
 
         public void Save()

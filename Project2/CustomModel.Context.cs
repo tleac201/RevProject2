@@ -27,5 +27,6 @@ namespace Project2
     
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<Ingredient> Ingredients { get; set; }
     }
 }
