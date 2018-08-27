@@ -383,11 +383,11 @@ namespace Project2.Controllers
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
-            /* TO DO: Complete
-             * if (!ModelState.IsValid)
+            // To do: complete
+            if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
-            }*/
+                return Content(HttpStatusCode.BadRequest, "Sent data does not match registration model.");
+            }
 
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
