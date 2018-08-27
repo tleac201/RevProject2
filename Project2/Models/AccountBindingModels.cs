@@ -4,6 +4,26 @@ using Newtonsoft.Json;
 
 namespace Project2.Models
 {
+    // Custom Login Binding Model
+
+    public class LoginUserBindingModel
+    {
+        /*
+         * Not sure if the data annotations should be handled here or in the MVC calling the API.
+         * Leaning towards application calling the API.
+        [Required]
+        [Display(Name = "Email Address")]
+        string Username { get; set; }
+        [Required]
+        [Display(Name = "Password")]
+        string Password { get; set; }
+        */
+
+        // Use email for consistency with RegisterViewBindModel
+        public string Email { get; set; }
+        public string Password { get; set; }
+    }
+    
     // Models used as parameters to AccountController actions.
 
     public class AddExternalLoginBindingModel
@@ -48,6 +68,18 @@ namespace Project2.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [DataType(DataType.Text)]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [DataType(DataType.Text)]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Phone Number")]
+        public string Phone { get; set; }
     }
 
     public class RegisterExternalBindingModel

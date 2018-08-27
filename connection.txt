@@ -1,0 +1,5 @@
+168.62.188.247:3389 rdp
+168.62.188.247:1433 sql
+
+
+mysqlvmlabel.eastus.cloudapp.azure.com,1433

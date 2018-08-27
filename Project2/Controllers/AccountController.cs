@@ -16,6 +16,10 @@ using Microsoft.Owin.Security.OAuth;
 using Project2.Models;
 using Project2.Providers;
 using Project2.Results;
+using Project2.DAL;
+using System.Diagnostics;
+using System.Text;
+using System.Net;
 
 namespace Project2.Controllers
 {
@@ -25,14 +29,21 @@ namespace Project2.Controllers
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
+        private IUserRepository _userRepo;
 
-        public AccountController()
+        public AccountController() : this(new UserRepo())
         {
+        }
+
+        public AccountController(IUserRepository userRepository)
+        {
+            _userRepo = userRepository;
         }
 
         public AccountController(ApplicationUserManager userManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
         {
+            Debug.WriteLine("No repository instantiated.");
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
         }
@@ -318,25 +329,106 @@ namespace Project2.Controllers
             return logins;
         }
 
+        // POST: api/Account/Login
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("Login")]
+        public async Task<HttpResponseMessage> Login(LoginUserBindingModel model)
+        {
+            // To do: improve error handling. I.e. send proper bad 
+            // request response. Currently, this is broken.
+            if (!ModelState.IsValid)
+            {
+                var message = "Bad request";
+                var response = new HttpResponseMessage(HttpStatusCode.NotFound);
+                response.Content = new StringContent(message);
+                return await Task.FromResult(response);
+            }
+            // Invoke the "token" OWIN service to perform the login: /api/token
+            // Ugly hack: I use a server-side HTTP POST because I cannot directly 
+            // invoke the service 
+            // (it is deeply hidden in the OAuthAuthorizationServerHandler class)
+            // {"Username":"username", "Password":"Password!123"}
+            var request = HttpContext.Current.Request;
+            var tokenServiceUrl = request.Url.GetLeftPart(UriPartial.Authority) +
+                request.ApplicationPath + "Token";
+            Debug.WriteLine($"tokenServiceUrl: {tokenServiceUrl}");
+            using (var client = new HttpClient())
+            {
+                var requestParams = new List<KeyValuePair<string, string>>
+                {
+                    new KeyValuePair<string, string>("grant_type", "password"),
+                    new KeyValuePair<string, string>("username", model.Email),
+                    new KeyValuePair<string, string>("password", model.Password)
+                };
+
+                var requestParamsFormUrlEncoded = new
+                    FormUrlEncodedContent(requestParams);
+                var tokenServiceResponse = await client.PostAsync(
+                    tokenServiceUrl, requestParamsFormUrlEncoded);
+                var responseString = await tokenServiceResponse.Content.ReadAsStringAsync();
+                var responseCode = tokenServiceResponse.StatusCode;
+                var responseMsg = new HttpResponseMessage(responseCode)
+                {
+                    Content = new StringContent(responseString,
+                        Encoding.UTF8, "application/json")
+                };
+                Debug.WriteLine($"responseString: {responseString}");
+                return responseMsg;
+            }
+        }
+
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterBindingModel model)
         {
-            if (!ModelState.IsValid)
+            /* TO DO: Complete
+             * if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
+            }*/
 
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
-            if (!result.Succeeded)
+            try
             {
-                return GetErrorResult(result);
-            }
+                IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+                if (!result.Succeeded)
+                {
+                    return GetErrorResult(result);
+                }
 
+                // All good with Identity creation. Make a user item.
+                
+                _userRepo.Insert(new Project2.User
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Phone = model.Phone,
+                    Email = model.Email,
+                    OpenDate = DateTime.Now,
+                    Active = true,
+                });
+                _userRepo.Save();
+
+                return Ok();
+            }
+            catch(System.IO.FileLoadException e)
+            {
+                Debug.WriteLine("This is your error, friend.");
+                Debug.WriteLine(e);
+            }
+            catch(System.ArgumentNullException e)
+            {
+                Debug.WriteLine("Null exception.");
+                Debug.WriteLine(e);
+            }
+            catch(Exception e)
+            {
+                Debug.WriteLine("Still there are problems partner");
+                Debug.WriteLine(e);
+            }
             return Ok();
         }
 
