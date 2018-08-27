@@ -3,22 +3,15 @@ x marks done
 	logon				x
 	logoff				x
 	register			x
-
-/CustomPizza
-	add ingredient
-	subtract ingredient
-	add to shopping cart?
-	add n to shopping cart?
-	c
-	r
-	u
-	d (set inactive)
-	cancel (set inactive)?
+	R
+	U
+	D
 
 /Standard item
+	Retrieve List
 	add quantity to cart
 	add single to cart
-
+	
 /Shopping cart
 	remove item
 	remove n items
@@ -31,3 +24,14 @@ x marks done
 	Cancel (return items to shopping cart)
 	Cancel selected items
 	order
+
+/CustomPizza
+	add ingredient
+	subtract ingredient
+	add to shopping cart?
+	add n to shopping cart?
+	c
+	r
+	u
+	d (set inactive)
+	cancel (set inactive)?
