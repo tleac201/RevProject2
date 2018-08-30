@@ -10,14 +10,14 @@
         <EntityTypeShape EntityType="Project2Model.Ingredient" Width="1.5" PointX="7.125" PointY="0.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Project2Model.Order" Width="1.5" PointX="2.875" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Project2Model.ShoppingCartItem" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Project2Model.StandardProduct" Width="1.5" PointX="7.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Project2Model.StandardProduct" Width="1.5" PointX="7.375" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Project2Model.User" Width="1.5" PointX="4.625" PointY="3.125" IsExpanded="true" />
         <AssociationConnector Association="Project2Model.FK_CustIngredients_CustomPizzas" ManuallyRouted="false" />
         <AssociationConnector Association="Project2Model.FK_CustIngredients_Ingredients" ManuallyRouted="false" />
         <AssociationConnector Association="Project2Model.FK_CustomPizzas_Users" ManuallyRouted="false" />
         <AssociationConnector Association="Project2Model.FK_Orders_User" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="Project2Model.Delivery" Width="1.5" PointX="1" PointY="9.75" />
-        <EntityTypeShape EntityType="Project2Model.Delivery_Address" Width="1.5" PointX="4.75" PointY="9.125" />
+        <EntityTypeShape EntityType="Project2Model.Delivery" Width="1.5" PointX="3" PointY="10.75" />
+        <EntityTypeShape EntityType="Project2Model.Delivery_Address" Width="1.5" PointX="6.75" PointY="9.875" />
         <AssociationConnector Association="Project2Model.FK_Deliveries_Delivery_Addresses" />
         <AssociationConnector Association="Project2Model.FK_Deliveries_Orders" />
         <AssociationConnector Association="Project2Model.FK_Delivery_Addresses_Users" />

@@ -1,0 +1,4 @@
+Categories of StandradProducts table:
+Pizzas 
+Sides 
+Drinks 
