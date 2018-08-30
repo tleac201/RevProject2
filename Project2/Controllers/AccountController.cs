@@ -442,7 +442,7 @@ namespace Project2.Controllers
             return User;
         }
 
-        // POST api/Account/5
+        // PUT api/Account/5
         // edit account info
         [AllowAnonymous]
         public IHttpActionResult Put(Project2.User user)
@@ -455,11 +455,6 @@ namespace Project2.Controllers
             User.LastName = user.LastName;
             User.Phone = (string)user.Phone;
             _userRepo.Update(User);
-            /*var db = new Project2Entities();
-            var x = db.Users.Find(user.UserId);
-            x.Phone = user.Phone;
-            db.SaveChanges();*/
-            //var testU = _userRepo.RetrieveById(user.UserId);
             _userRepo.Save();
                     
             return Ok();
