@@ -12,20 +12,24 @@ namespace Project2
     using System;
     using System.Collections.Generic;
     
-    public partial class Ingredient
+    public partial class Delivery_Address
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Ingredient()
+        public Delivery_Address()
         {
-            this.CustIngredients = new HashSet<CustIngredient>();
+            this.Deliveries = new HashSet<Delivery>();
         }
     
-        public int IngredientId { get; set; }
-        public string IngredientName { get; set; }
-        public string Description { get; set; }
-        public decimal Price { get; set; }
+        public int DeliveryAddressesId { get; set; }
+        public int UserId { get; set; }
+        public string State { get; set; }
+        public string City { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public short ZipCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CustIngredient> CustIngredients { get; set; }
+        public virtual ICollection<Delivery> Deliveries { get; set; }
+        public virtual User User { get; set; }
     }
 }

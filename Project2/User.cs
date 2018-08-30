@@ -17,7 +17,10 @@ namespace Project2
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
+            this.CustomPizzas = new HashSet<CustomPizza>();
             this.Orders = new HashSet<Order>();
+            this.Delivery_Addresses = new HashSet<Delivery_Address>();
+            this.ShoppingCartItems = new HashSet<ShoppingCartItem>();
         }
     
         public int UserId { get; set; }
@@ -30,6 +33,12 @@ namespace Project2
         public string Phone { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CustomPizza> CustomPizzas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Delivery_Address> Delivery_Addresses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ShoppingCartItem> ShoppingCartItems { get; set; }
     }
 }

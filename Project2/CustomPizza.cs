@@ -12,20 +12,19 @@ namespace Project2
     using System;
     using System.Collections.Generic;
     
-    public partial class Ingredient
+    public partial class CustomPizza
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Ingredient()
+        public CustomPizza()
         {
             this.CustIngredients = new HashSet<CustIngredient>();
         }
     
-        public int IngredientId { get; set; }
-        public string IngredientName { get; set; }
-        public string Description { get; set; }
-        public decimal Price { get; set; }
+        public int Id { get; set; }
+        public int UserId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustIngredient> CustIngredients { get; set; }
+        public virtual User User { get; set; }
     }
 }

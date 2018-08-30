@@ -1,0 +1,662 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Project2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CustIngredients">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CPId" Type="int" Nullable="false" />
+          <Property Name="IngredientId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomPizzas">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Deliveries">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="DeliveryAddress" Type="int" Nullable="false" />
+          <Property Name="OrderInstructions" Type="nvarchar" MaxLength="280" />
+          <Property Name="DeliveryDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Delivery Addresses">
+          <Key>
+            <PropertyRef Name="DeliveryAddressesId" />
+          </Key>
+          <Property Name="DeliveryAddressesId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address1" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="50" />
+          <Property Name="ZipCode" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ingredients">
+          <Key>
+            <PropertyRef Name="IngredientId" />
+          </Key>
+          <Property Name="IngredientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IngredientName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Price" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="Standard" Type="bit" Nullable="false" />
+          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShoppingCartItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="DatePlaced" Type="datetime" Nullable="false" />
+          <Property Name="DateRemoved" Type="datetime" />
+          <Property Name="Standard" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StandardProducts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="280" />
+          <Property Name="Price" Type="money" Nullable="false" />
+          <Property Name="Category" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="OpenDate" Type="datetime" Nullable="false" />
+          <Property Name="CloseDate" Type="datetime" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_CustIngredients_CustomPizzas">
+          <End Role="CustomPizzas" Type="Self.CustomPizzas" Multiplicity="1" />
+          <End Role="CustIngredients" Type="Self.CustIngredients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomPizzas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustIngredients">
+              <PropertyRef Name="CPId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustIngredients_Ingredients">
+          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="1" />
+          <End Role="CustIngredients" Type="Self.CustIngredients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredients">
+              <PropertyRef Name="IngredientId" />
+            </Principal>
+            <Dependent Role="CustIngredients">
+              <PropertyRef Name="IngredientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomPizzas_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="CustomPizzas" Type="Self.CustomPizzas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="CustomPizzas">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Deliveries_Delivery Addresses">
+          <End Role="Delivery Addresses" Type="Self.Delivery Addresses" Multiplicity="1" />
+          <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Delivery Addresses">
+              <PropertyRef Name="DeliveryAddressesId" />
+            </Principal>
+            <Dependent Role="Deliveries">
+              <PropertyRef Name="DeliveryAddress" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Deliveries_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Deliveries">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Delivery Addresses_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Delivery Addresses" Type="Self.Delivery Addresses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Delivery Addresses">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShoppingCartItems_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="ShoppingCartItems" Type="Self.ShoppingCartItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ShoppingCartItems">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Project2ModelStoreContainer">
+          <EntitySet Name="CustIngredients" EntityType="Self.CustIngredients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomPizzas" EntityType="Self.CustomPizzas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Deliveries" EntityType="Self.Deliveries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Delivery Addresses" EntityType="Self.Delivery Addresses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ingredients" EntityType="Self.Ingredients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShoppingCartItems" EntityType="Self.ShoppingCartItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StandardProducts" EntityType="Self.StandardProducts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CustIngredients_CustomPizzas" Association="Self.FK_CustIngredients_CustomPizzas">
+            <End Role="CustomPizzas" EntitySet="CustomPizzas" />
+            <End Role="CustIngredients" EntitySet="CustIngredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustIngredients_Ingredients" Association="Self.FK_CustIngredients_Ingredients">
+            <End Role="Ingredients" EntitySet="Ingredients" />
+            <End Role="CustIngredients" EntitySet="CustIngredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomPizzas_Users" Association="Self.FK_CustomPizzas_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="CustomPizzas" EntitySet="CustomPizzas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Deliveries_Delivery Addresses" Association="Self.FK_Deliveries_Delivery Addresses">
+            <End Role="Delivery Addresses" EntitySet="Delivery Addresses" />
+            <End Role="Deliveries" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Deliveries_Orders" Association="Self.FK_Deliveries_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Deliveries" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Delivery Addresses_Users" Association="Self.FK_Delivery Addresses_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Delivery Addresses" EntitySet="Delivery Addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShoppingCartItems_Users" Association="Self.FK_ShoppingCartItems_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="ShoppingCartItems" EntitySet="ShoppingCartItems" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Project2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CustIngredient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CPId" Type="Int32" Nullable="false" />
+          <Property Name="IngredientId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CustomPizza" Relationship="Self.FK_CustIngredients_CustomPizzas" FromRole="CustIngredients" ToRole="CustomPizzas" />
+          <NavigationProperty Name="Ingredient" Relationship="Self.FK_CustIngredients_Ingredients" FromRole="CustIngredients" ToRole="Ingredients" />
+        </EntityType>
+        <EntityType Name="CustomPizza">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CustIngredients" Relationship="Self.FK_CustIngredients_CustomPizzas" FromRole="CustomPizzas" ToRole="CustIngredients" />
+          <NavigationProperty Name="User" Relationship="Self.FK_CustomPizzas_Users" FromRole="CustomPizzas" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="IngredientId" />
+          </Key>
+          <Property Name="IngredientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IngredientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="CustIngredients" Relationship="Self.FK_CustIngredients_Ingredients" FromRole="Ingredients" ToRole="CustIngredients" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Orders_User" FromRole="Orders" ToRole="Users" />
+          <NavigationProperty Name="Deliveries" Relationship="Project2Model.FK_Deliveries_Orders" FromRole="Order" ToRole="Delivery" />
+          <NavigationProperty Name="OrderDetails" Relationship="Project2Model.FK_OrderDetails_Orders" FromRole="Order" ToRole="OrderDetail" />
+        </EntityType>
+        <EntityType Name="ShoppingCartItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Standard" Type="Boolean" Nullable="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="DatePlaced" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateRemoved" Type="DateTime" Precision="3" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Project2Model.FK_ShoppingCartItems_Users" FromRole="ShoppingCartItem" ToRole="User" />
+        </EntityType>
+        <EntityType Name="StandardProduct">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="280" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Category" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="OpenDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CloseDate" Type="DateTime" Precision="3" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CustomPizzas" Relationship="Self.FK_CustomPizzas_Users" FromRole="Users" ToRole="CustomPizzas" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_User" FromRole="Users" ToRole="Orders" />
+          <NavigationProperty Name="Delivery_Addresses" Relationship="Project2Model.FK_Delivery_Addresses_Users" FromRole="User" ToRole="Delivery_Address" />
+          <NavigationProperty Name="ShoppingCartItems" Relationship="Project2Model.FK_ShoppingCartItems_Users" FromRole="User" ToRole="ShoppingCartItem" />
+        </EntityType>
+        <Association Name="FK_CustIngredients_CustomPizzas">
+          <End Role="CustomPizzas" Type="Self.CustomPizza" Multiplicity="1" />
+          <End Role="CustIngredients" Type="Self.CustIngredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomPizzas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustIngredients">
+              <PropertyRef Name="CPId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustIngredients_Ingredients">
+          <End Role="Ingredients" Type="Self.Ingredient" Multiplicity="1" />
+          <End Role="CustIngredients" Type="Self.CustIngredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredients">
+              <PropertyRef Name="IngredientId" />
+            </Principal>
+            <Dependent Role="CustIngredients">
+              <PropertyRef Name="IngredientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomPizzas_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="CustomPizzas" Type="Self.CustomPizza" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="CustomPizzas">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_User">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Project2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CustIngredients" EntityType="Self.CustIngredient" />
+          <EntitySet Name="CustomPizzas" EntityType="Self.CustomPizza" />
+          <EntitySet Name="Ingredients" EntityType="Self.Ingredient" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="ShoppingCartItems" EntityType="Self.ShoppingCartItem" />
+          <EntitySet Name="StandardProducts" EntityType="Self.StandardProduct" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_CustIngredients_CustomPizzas" Association="Self.FK_CustIngredients_CustomPizzas">
+            <End Role="CustomPizzas" EntitySet="CustomPizzas" />
+            <End Role="CustIngredients" EntitySet="CustIngredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustIngredients_Ingredients" Association="Self.FK_CustIngredients_Ingredients">
+            <End Role="Ingredients" EntitySet="Ingredients" />
+            <End Role="CustIngredients" EntitySet="CustIngredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomPizzas_Users" Association="Self.FK_CustomPizzas_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="CustomPizzas" EntitySet="CustomPizzas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_User" Association="Self.FK_Orders_User">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <EntitySet Name="Deliveries" EntityType="Project2Model.Delivery" />
+          <EntitySet Name="Delivery_Addresses" EntityType="Project2Model.Delivery_Address" />
+          <AssociationSet Name="FK_Deliveries_Delivery_Addresses" Association="Project2Model.FK_Deliveries_Delivery_Addresses">
+            <End Role="Delivery_Address" EntitySet="Delivery_Addresses" />
+            <End Role="Delivery" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Deliveries_Orders" Association="Project2Model.FK_Deliveries_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Delivery" EntitySet="Deliveries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Delivery_Addresses_Users" Association="Project2Model.FK_Delivery_Addresses_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Delivery_Address" EntitySet="Delivery_Addresses" />
+          </AssociationSet>
+          <EntitySet Name="OrderDetails" EntityType="Project2Model.OrderDetail" />
+          <AssociationSet Name="FK_OrderDetails_Orders" Association="Project2Model.FK_OrderDetails_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShoppingCartItems_Users" Association="Project2Model.FK_ShoppingCartItems_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ShoppingCartItem" EntitySet="ShoppingCartItems" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Delivery">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="DeliveryAddress" Type="Int32" Nullable="false" />
+          <Property Name="OrderInstructions" Type="String" MaxLength="280" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Delivery_Addresses" Relationship="Project2Model.FK_Deliveries_Delivery_Addresses" FromRole="Delivery" ToRole="Delivery_Address" />
+          <NavigationProperty Name="Order" Relationship="Project2Model.FK_Deliveries_Orders" FromRole="Delivery" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Delivery_Address">
+          <Key>
+            <PropertyRef Name="DeliveryAddressesId" />
+          </Key>
+          <Property Name="DeliveryAddressesId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Deliveries" Relationship="Project2Model.FK_Deliveries_Delivery_Addresses" FromRole="Delivery_Address" ToRole="Delivery" />
+          <NavigationProperty Name="User" Relationship="Project2Model.FK_Delivery_Addresses_Users" FromRole="Delivery_Address" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Deliveries_Delivery_Addresses">
+          <End Type="Project2Model.Delivery_Address" Role="Delivery_Address" Multiplicity="1" />
+          <End Type="Project2Model.Delivery" Role="Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Delivery_Address">
+              <PropertyRef Name="DeliveryAddressesId" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="DeliveryAddress" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Deliveries_Orders">
+          <End Type="Project2Model.Order" Role="Order" Multiplicity="1" />
+          <End Type="Project2Model.Delivery" Role="Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Delivery_Addresses_Users">
+          <End Type="Project2Model.User" Role="User" Multiplicity="1" />
+          <End Type="Project2Model.Delivery_Address" Role="Delivery_Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Delivery_Address">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="Standard" Type="Boolean" Nullable="false" />
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="Project2Model.FK_OrderDetails_Orders" FromRole="OrderDetail" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK_OrderDetails_Orders">
+          <End Type="Project2Model.Order" Role="Order" Multiplicity="1" />
+          <End Type="Project2Model.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShoppingCartItems_Users">
+          <End Type="Project2Model.User" Role="User" Multiplicity="1" />
+          <End Type="Project2Model.ShoppingCartItem" Role="ShoppingCartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ShoppingCartItem">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Project2ModelStoreContainer" CdmEntityContainer="Project2Entities">
+          <EntitySetMapping Name="CustIngredients">
+            <EntityTypeMapping TypeName="Project2Model.CustIngredient">
+              <MappingFragment StoreEntitySet="CustIngredients">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CPId" ColumnName="CPId" />
+                <ScalarProperty Name="IngredientId" ColumnName="IngredientId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomPizzas">
+            <EntityTypeMapping TypeName="Project2Model.CustomPizza">
+              <MappingFragment StoreEntitySet="CustomPizzas">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ingredients">
+            <EntityTypeMapping TypeName="Project2Model.Ingredient">
+              <MappingFragment StoreEntitySet="Ingredients">
+                <ScalarProperty Name="IngredientId" ColumnName="IngredientId" />
+                <ScalarProperty Name="IngredientName" ColumnName="IngredientName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="Project2Model.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShoppingCartItems">
+            <EntityTypeMapping TypeName="Project2Model.ShoppingCartItem">
+              <MappingFragment StoreEntitySet="ShoppingCartItems">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Standard" ColumnName="Standard" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="DatePlaced" ColumnName="DatePlaced" />
+                <ScalarProperty Name="DateRemoved" ColumnName="DateRemoved" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StandardProducts">
+            <EntityTypeMapping TypeName="Project2Model.StandardProduct">
+              <MappingFragment StoreEntitySet="StandardProducts">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Project2Model.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="OpenDate" ColumnName="OpenDate" />
+                <ScalarProperty Name="CloseDate" ColumnName="CloseDate" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Deliveries">
+            <EntityTypeMapping TypeName="Project2Model.Delivery">
+              <MappingFragment StoreEntitySet="Deliveries">
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="OrderInstructions" ColumnName="OrderInstructions" />
+                <ScalarProperty Name="DeliveryAddress" ColumnName="DeliveryAddress" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Delivery_Addresses">
+            <EntityTypeMapping TypeName="Project2Model.Delivery_Address">
+              <MappingFragment StoreEntitySet="Delivery Addresses">
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DeliveryAddressesId" ColumnName="DeliveryAddressesId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="Project2Model.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetails">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="Standard" ColumnName="Standard" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
