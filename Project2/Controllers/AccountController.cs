@@ -136,7 +136,7 @@ namespace Project2.Controllers
 
             IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
                 model.NewPassword);
-            
+
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -269,9 +269,9 @@ namespace Project2.Controllers
             if (hasRegistered)
             {
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                
-                 ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
-                    OAuthDefaults.AuthenticationType);
+
+                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
+                   OAuthDefaults.AuthenticationType);
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
@@ -400,7 +400,7 @@ namespace Project2.Controllers
                 }
 
                 // All good with Identity creation. Make a user item.
-                
+
                 _userRepo.Insert(new Project2.User
                 {
                     FirstName = model.FirstName,
@@ -414,17 +414,17 @@ namespace Project2.Controllers
 
                 return Ok();
             }
-            catch(System.IO.FileLoadException e)
+            catch (System.IO.FileLoadException e)
             {
                 Debug.WriteLine("This is your error, friend.");
                 Debug.WriteLine(e);
             }
-            catch(System.ArgumentNullException e)
+            catch (System.ArgumentNullException e)
             {
                 Debug.WriteLine("Null exception.");
                 Debug.WriteLine(e);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Debug.WriteLine("Still there are problems partner");
                 Debug.WriteLine(e);
@@ -432,6 +432,39 @@ namespace Project2.Controllers
             return Ok();
         }
 
+        // GET api/Account/5
+        // return account info
+        // TO DO: Remove AllowAnonymous
+        [AllowAnonymous]
+        public Project2.User Get(int id)
+        {
+            var User = _userRepo.RetrieveById(id);
+            return User;
+        }
+
+        // POST api/Account/5
+        // edit account info
+        [AllowAnonymous]
+        public IHttpActionResult Put(Project2.User user)
+        {
+            // TO DO: Authenticate user
+            var User = _userRepo.RetrieveById(user.UserId);
+
+            //Only these attributes may be edited
+            User.FirstName = user.FirstName;
+            User.LastName = user.LastName;
+            User.Phone = (string)user.Phone;
+            _userRepo.Update(User);
+            /*var db = new Project2Entities();
+            var x = db.Users.Find(user.UserId);
+            x.Phone = user.Phone;
+            db.SaveChanges();*/
+            //var testU = _userRepo.RetrieveById(user.UserId);
+            _userRepo.Save();
+                    
+            return Ok();
+        }
+        
         // POST api/Account/RegisterExternal
         [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]

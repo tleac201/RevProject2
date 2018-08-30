@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data;
 using System.Web;
+using System.Data.Entity;
 using Project2.Models;
+
 namespace Project2.DAL
 {
     public class UserRepo : IUserRepository
     {
         Project2Entities db = new Project2Entities();
-
+        
         public IEnumerable<User> RetrieveAll()
         {
             return db.Users;
@@ -23,13 +26,14 @@ namespace Project2.DAL
         {
             db.Users.Add(user);
         }
-
+        
         public void Update(User user)
         {
-            var dbUser = db.Users.Find(user.UserId);
-            dbUser = user;
+            db.Entry(user).State = EntityState.Modified;
+            /*var dbUser = db.Users.Find(user.UserId);
+            dbUser = user;*/
         }
-
+        
         public void Delete(User user)
         {
             user.CloseDate = DateTime.Now;
@@ -54,7 +58,7 @@ namespace Project2.DAL
                     db.Dispose();
                 }
 
-                disposedValue = true;
+                this.disposedValue = true;
             }
         }
 
