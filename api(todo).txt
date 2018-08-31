@@ -1,18 +1,20 @@
 x marks done
 /Account
-	logon				x
-	logoff				x
-	register			x
-	R
-	U
+	logon									x
+	logoff									x
+	register								x	
+	R										x
+	U										x
 	D
 
 /Standard item
-	Retrieve List
-	add quantity to cart
-	add single to cart
+	Retrieve List							x
 	
 /Shopping cart
+	add quantity standard product to cart
+	add single standard product to cart
+	add quantity custom pizza to cart
+	add single custom pizza to cart
 	remove item
 	remove n items
 	proceed to order

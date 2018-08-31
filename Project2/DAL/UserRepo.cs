@@ -30,8 +30,6 @@ namespace Project2.DAL
         public void Update(User user)
         {
             db.Entry(user).State = EntityState.Modified;
-            /*var dbUser = db.Users.Find(user.UserId);
-            dbUser = user;*/
         }
         
         public void Delete(User user)
