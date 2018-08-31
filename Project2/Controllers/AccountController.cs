@@ -445,7 +445,7 @@ namespace Project2.Controllers
         // PUT api/Account/5
         // edit account info
         [AllowAnonymous]
-        public IHttpActionResult Put(Project2.User user)
+        public IHttpActionResult Put(User user)
         {
             // TO DO: Authenticate user
             var User = _userRepo.RetrieveById(user.UserId);
