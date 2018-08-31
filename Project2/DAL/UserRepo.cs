@@ -19,7 +19,8 @@ namespace Project2.DAL
 
         public User RetrieveById(int id)
         {
-            return db.Users.Find(id);
+            var user = db.Users.Find(id);
+			return user;
         }
 
         public void Insert(User user)

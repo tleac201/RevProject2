@@ -15,7 +15,8 @@ namespace Project2
     
     public partial class Project2Entities : DbContext
     {
-        public Project2Entities()
+        
+    public Project2Entities()
             : base("name=Project2Entities")
         {
         }
