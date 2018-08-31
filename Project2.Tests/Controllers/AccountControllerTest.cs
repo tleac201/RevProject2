@@ -92,8 +92,8 @@ namespace Project2.Tests.Controllers
 		}
         
         /*
-         * Would not advise testing with Identity functions. Behavior is wonky
-         * in debug mode.
+        Would not advise testing with Identity functions. Behavior is wonky
+        in debug mode.
         [TestMethod]
         public async Task Register()
         {
