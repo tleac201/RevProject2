@@ -20,6 +20,8 @@ namespace Project2.Models
 			CustomPizzaRepo = new CustomPizzaRepo(entities);
 			StandardProductRepo = new StandardProductRepo(entities);
 		}
+
+		#region Shopping Carts
 		public ShoppingCartItem Map(ShoppingCartItemVM vm)
 		{
 			ShoppingCartItem item = new ShoppingCartItem
@@ -49,7 +51,9 @@ namespace Project2.Models
 			};
 			return vm;
 		}
+		#endregion
 
+		#region CustomPizza
 		public CustomPizza Map(CustomPizzaVM pizzaVM)
 		{
 			return new CustomPizza
@@ -70,5 +74,6 @@ namespace Project2.Models
 				UserId = pizza.UserId
 			};
 		}
+		#endregion
 	}
 }
