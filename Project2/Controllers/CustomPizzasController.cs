@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using Project2;
 using Project2.DAL;
@@ -14,7 +15,8 @@ using Project2.Models;
 
 namespace Project2.Controllers
 {
-    public class CustomPizzasController : ApiController
+	[EnableCors(origins: "*", headers: "*", methods: "*")]
+	public class CustomPizzasController : ApiController
     {
 		private Mapping map = new Mapping();
 		private User user;

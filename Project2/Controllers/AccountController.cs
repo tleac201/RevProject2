@@ -20,10 +20,12 @@ using Project2.DAL;
 using System.Diagnostics;
 using System.Text;
 using System.Net;
+using System.Web.Http.Cors;
 
 namespace Project2.Controllers
 {
-    [Authorize]
+	[EnableCors(origins: "*", headers: "*", methods: "*")]
+	[Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {

@@ -4,10 +4,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace Project2.Controllers
 {
-    [Authorize]
+	[EnableCors(origins: "*", headers:"*", methods:"*")]
+	[Authorize]
     public class ValuesController : ApiController
     {
         // GET api/values
