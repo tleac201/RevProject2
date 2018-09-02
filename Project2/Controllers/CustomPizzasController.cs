@@ -46,22 +46,26 @@ namespace Project2.Controllers
 
         // PUT: api/CustomPizzas/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCustomPizza(int id, CustomPizza customPizza)
+        public IHttpActionResult PutCustomPizza(int id, CustomPizzaVM customPizzaVM)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != customPizza.Id)
+            if (id != customPizzaVM.Id)
             {
                 return BadRequest();
             }
 
-			if(customPizza.UserId != user.UserId)
+			if(customPizzaVM.UserId != user.UserId)
 			{
 				return Unauthorized();
 			}
+
+			var customPizza = map.CustomPizzaRepo.RetrieveById(id);
+			var tempCP = map.Map(customPizzaVM);
+			customPizza.CustIngredients = tempCP.CustIngredients;
 
 			map.CustomPizzaRepo.Update(customPizza);
 
@@ -93,7 +97,7 @@ namespace Project2.Controllers
                 return BadRequest(ModelState);
             }
 
-			if(customPizzaVM.UserId == user.UserId)
+			if(customPizzaVM.UserId != user.UserId)
 			{
 				return Unauthorized();
 			}
@@ -102,10 +106,10 @@ namespace Project2.Controllers
 
 			var customPizza = map.Map(customPizzaVM);
             map.CustomPizzaRepo.Insert(customPizza);
+			map.CustomPizzaRepo.Save();
 
-			
-
-            map.CustomPizzaRepo.Save();
+			//map.CustIngredientsRepo.Insert(customPizza.CustIngredients);
+			//map.CustIngredientsRepo.Save();
 
             return CreatedAtRoute("DefaultApi", new { id = customPizza.Id }, customPizza);
         }
@@ -125,7 +129,18 @@ namespace Project2.Controllers
 				return Unauthorized();
 			}
 
-            map.CustomPizzaRepo.Delete(customPizza);
+			// Delete ingredients first - their dependencies won't let the pizza
+			// be removed.
+			var ingredientList = map.CustIngredientsRepo.RetrieveAll()
+					.Where(item => item.CPId == id);
+			foreach(var ingredient in ingredientList)
+			{
+				map.CustIngredientsRepo.Delete(ingredient);
+			}
+			map.CustIngredientsRepo.Save();
+
+			// Then delete the pizza.
+			map.CustomPizzaRepo.Delete(customPizza);
             map.CustomPizzaRepo.Save();
 
             return Ok(customPizza);

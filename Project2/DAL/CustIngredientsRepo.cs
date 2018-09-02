@@ -5,51 +5,47 @@ using System.Web;
 
 namespace Project2.DAL
 {
-	public class CustomPizzaRepo : ICustomPizzaRepo
+	public class CustIngredientsRepo : ICustIngredientsRepo, IDisposable
 	{
-		public Project2Entities db;
-
-		public CustomPizzaRepo()
+		private Project2Entities db;
+		public CustIngredientsRepo(Project2Entities entities)
 		{
+			db = entities;
 		}
 
-		public CustomPizzaRepo(Project2Entities db)
+		public void Delete(CustIngredient Ingredient)
 		{
-			this.db = db;
+			db.CustIngredients.Remove(Ingredient);
 		}
 
-		public void Delete(CustomPizza pizza)
+		public void Insert(CustIngredient Ingredient)
 		{
-			db.CustIngredients.RemoveRange(
-				db.CustIngredients.Where(custI => custI.CPId == pizza.Id)
-			);
-			db.CustomPizzas.Remove(pizza);
+			db.CustIngredients.Add(Ingredient);
 		}
 
-		public void Insert(CustomPizza pizza)
+		public void Insert(ICollection<CustIngredient> Ingredients)
 		{
-			db.CustomPizzas.Add(pizza);
-			db.CustIngredients.AddRange(pizza.CustIngredients);
+			db.CustIngredients.AddRange(Ingredients);
 		}
 
-		public IEnumerable<CustomPizza> RetrieveAll()
+		public IEnumerable<CustIngredient> RetrieveAll()
 		{
-			return db.CustomPizzas;
+			return db.CustIngredients;
 		}
 
-		public CustomPizza RetrieveById(int id)
+		public CustIngredient RetrieveById(int id)
 		{
-			return db.CustomPizzas.Find(id);
+			return db.CustIngredients.Find(id);
+		}
+
+		public void Update(CustIngredient Ingredient)
+		{
+			db.Entry(Ingredient).State = System.Data.Entity.EntityState.Modified;
 		}
 
 		public void Save()
 		{
 			db.SaveChanges();
-		}
-
-		public void Update(CustomPizza pizza)
-		{
-			db.Entry(pizza).State = System.Data.Entity.EntityState.Modified;
 		}
 
 		#region IDisposable Support
@@ -72,7 +68,7 @@ namespace Project2.DAL
 		}
 
 		// TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-		// ~StandardProductRepo() {
+		// ~CustIngredientsRepo() {
 		//   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
 		//   Dispose(false);
 		// }

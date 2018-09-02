@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+
+// These are the real deal repositories. They interact with the database.
 namespace Project2.DAL
 {
     public interface IUserRepository : IDisposable
     {
-        void Insert(User user);
+		void Insert(User user);
         void Delete(User user);
         void Update(User user);
         User RetrieveById(int id);
@@ -42,6 +44,17 @@ namespace Project2.DAL
 		void Update(StandardProduct Product);
 		IEnumerable<StandardProduct> RetrieveAll();
 		StandardProduct RetrieveById(int id);
+		void Save();
+	}
+
+	public interface ICustIngredientsRepo : IDisposable
+	{
+		void Insert(CustIngredient Ingredient);
+		void Insert(ICollection<CustIngredient> custIngredients);
+		void Delete(CustIngredient Ingredient);
+		void Update(CustIngredient Ingredient);
+		IEnumerable<CustIngredient> RetrieveAll();
+		CustIngredient RetrieveById(int id);
 		void Save();
 	}
 }

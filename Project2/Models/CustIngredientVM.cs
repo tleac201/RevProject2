@@ -5,10 +5,10 @@ using System.Web;
 
 namespace Project2.Models
 {
-	public class CustomPizzaVM
+	public class CustIngredientVM
 	{
 		public int? Id { get; set; }
-		public int UserId { get; set; }
-		public ICollection<CustIngredientVM> CustIngredients { get; set; }
+		public int? CPId { get; set; }
+		public int IngredientId { get; set; }
 	}
 }

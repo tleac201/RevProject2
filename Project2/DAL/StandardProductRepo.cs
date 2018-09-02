@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Project2.DAL
 {
-	public class StandardProductRepo : IStandardProductRepo
+	public class StandardProductRepo : IStandardProductRepo, IDisposable
 	{
 		public Project2Entities db;
 
