@@ -10,7 +10,12 @@ namespace Project2.DAL
 {
     public class UserRepo : IUserRepository
     {
-        Project2Entities db = new Project2Entities();
+		Project2Entities db;
+
+		public UserRepo(Project2Entities project)
+		{
+			db = project;
+		}
         
         public IEnumerable<User> RetrieveAll()
         {

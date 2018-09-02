@@ -102,6 +102,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountControllerTest.cs" />
+    <Compile Include="Controllers\ShoppingCartControllerTest.cs" />
+    <Compile Include="DAL\ShoppingCartControllerRepoTest.cs" />
     <Compile Include="DAL\UserRepoTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />

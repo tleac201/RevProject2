@@ -30,9 +30,10 @@ namespace Project2.Controllers
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
         private IUserRepository _userRepo;
-
-        public AccountController() : this(new UserRepo())
+		private Mapping map;
+        public AccountController()
         {
+			_userRepo = map.UserRepo;
         }
 
         public AccountController(IUserRepository userRepository)
