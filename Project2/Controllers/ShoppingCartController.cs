@@ -58,19 +58,23 @@ namespace Project2.Controllers
 
 		// PUT: api/ShoppingCart/5
 		[ResponseType(typeof(void))]
-		public IHttpActionResult PutShoppingCartItem(int id, ShoppingCartItem shoppingCartItem)
+		public IHttpActionResult PutShoppingCartItem(int id, ShoppingCartItemVM shoppingCartItemVM)
 		{
-			if (!ModelState.IsValid)
+			if (!ModelState.IsValid || shoppingCartItemVM.Id == null)
 			{
 				return BadRequest(ModelState);
 			}
 
 			//Check that item belongs to user before editing
-			if (id != shoppingCartItem.Id || shoppingCartItem.User.UserId != _user.UserId)
+			if (id != shoppingCartItemVM.Id || shoppingCartItemVM.UserId != _user.UserId)
 			{
 				return BadRequest();
 			}
 
+			// All is good in the hood. Update table.
+
+			var shoppingCartItem = Map.ShoppingCartRepo.RetrieveById((int)shoppingCartItemVM.Id);
+			shoppingCartItem.Quantity = shoppingCartItemVM.Quantity;
 			Map.ShoppingCartRepo.Update(shoppingCartItem);
 
 			try
@@ -108,8 +112,30 @@ namespace Project2.Controllers
 			}
 
 			shoppingCartItemVM.DatePlaced = DateTime.Now;
-			var shoppingCartItem = Map.Map(shoppingCartItemVM);
-		
+
+			// Map VM to an actual item.
+			var mappedShoppingCartItem = Map.Map(shoppingCartItemVM);
+
+			// Check if there is already a quantity of the product in the shopping cart
+			// for the user.
+			var shoppingCartItem = Map.ShoppingCartRepo.RetrieveAll().Where(
+				QItem => QItem.UserId == _user.UserId
+				&& QItem.ProductId == mappedShoppingCartItem.ProductId
+				&& QItem.Standard == mappedShoppingCartItem.Standard
+			).SingleOrDefault();
+
+			// If there are already matching items - BadRequest
+			if(shoppingCartItem != null)
+			{
+				return BadRequest("Edit quantities in shopping cart. Don't order more.");
+			}
+
+			//All is well. Make an item
+			shoppingCartItem = Map.Map(shoppingCartItemVM);
+			shoppingCartItem.DatePlaced = DateTime.Now;
+			Map.ShoppingCartRepo.Insert(shoppingCartItem);
+			Map.ShoppingCartRepo.Save();
+				
 			return CreatedAtRoute("DefaultApi", new { id = shoppingCartItem.Id }, shoppingCartItem);
 		}
 

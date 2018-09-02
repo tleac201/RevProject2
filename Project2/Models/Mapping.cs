@@ -22,33 +22,17 @@ namespace Project2.Models
 		}
 		public ShoppingCartItem Map(ShoppingCartItemVM vm)
 		{
-			ShoppingCartItem item;
-
-			//if shopping cart item exists - retrieve the object. Else
-			// make new one and register with db.
-			if (vm.Id != null)
+			ShoppingCartItem item = new ShoppingCartItem
 			{
-				item = ShoppingCartRepo.RetrieveById((int)vm.Id);
-				item.SetItem();
-			}
-			else
-			{
-				item = new ShoppingCartItem
-				{
-					ProductId = vm.ProductId,
-					Quantity = vm.Quantity,
-					Standard = vm.Standard,
-					User = UserRepo.RetrieveById(vm.UserId),
-					DatePlaced = DateTime.Now,
-					UserId = vm.UserId,
-					standardProductRepo = StandardProductRepo
-				};
-				
-				ShoppingCartRepo.Insert(item);
-				item.SetItem();
-				ShoppingCartRepo.Save();
-			}
-			
+				ProductId = vm.ProductId,
+				Quantity = vm.Quantity,
+				Standard = vm.Standard,
+				User = UserRepo.RetrieveById(vm.UserId),
+				DatePlaced = DateTime.Now,
+				UserId = vm.UserId,
+			};
+			// Set the object refernece to a corresponding CP or SP
+			// item.SetItem();
 			return item;
 		}
 

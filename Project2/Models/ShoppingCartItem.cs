@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Project2.DAL;
+using Project2.Models;
 
 namespace Project2
 {
@@ -10,20 +11,17 @@ namespace Project2
 	{
 		CustomPizza CustomPizza { get; set; }
 		StandardProduct StandardProduct { get; set; }
-		IShoppingCartRepository shoppingCartRepository { get; set; }
-		public IStandardProductRepo standardProductRepo { get; set; }
-		public ICustomPizzaRepo customPizzaRepo { get; set; }
 		
 		public void SetItem()
 		{
-			
+			Mapping map = new Mapping();
 			if (Standard == true)
 			{
-				StandardProduct = standardProductRepo.RetrieveById(ProductId);
+				StandardProduct = map.StandardProductRepo.RetrieveById(ProductId);
 			}
 			else
 			{
-				CustomPizza = customPizzaRepo.RetrieveById(ProductId);
+				CustomPizza = map.CustomPizzaRepo.RetrieveById(ProductId);
 			}
 		}
 	}
