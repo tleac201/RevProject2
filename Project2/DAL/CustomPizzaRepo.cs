@@ -9,7 +9,7 @@ namespace Project2.DAL
 	{
 		public Project2Entities db;
 
-		public CustomPizzaRepo() : this(new Project2Entities())
+		public CustomPizzaRepo()
 		{
 		}
 

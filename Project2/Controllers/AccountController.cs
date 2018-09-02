@@ -33,6 +33,7 @@ namespace Project2.Controllers
 		private Mapping map;
         public AccountController()
         {
+			this.map = new Mapping();
 			_userRepo = map.UserRepo;
         }
 

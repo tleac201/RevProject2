@@ -49,5 +49,26 @@ namespace Project2.Models
 			};
 			return vm;
 		}
+
+		public CustomPizza Map(CustomPizzaVM pizzaVM)
+		{
+			return new CustomPizza
+			{
+				Id = pizzaVM.Id,
+				UserId = pizzaVM.UserId,
+				CustIngredients = pizzaVM.CustIngredients,
+				User = UserRepo.RetrieveById(pizzaVM.UserId)
+			};
+		}
+
+		public CustomPizzaVM Map(CustomPizza pizza)
+		{
+			return new CustomPizzaVM
+			{
+				Id = pizza.Id,
+				CustIngredients = pizza.CustIngredients,
+				UserId = pizza.UserId
+			};
+		}
 	}
 }
