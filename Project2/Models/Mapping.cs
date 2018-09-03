@@ -40,6 +40,12 @@ namespace Project2.Models
 				DatePlaced = DateTime.Now,
 				UserId = vm.UserId,
 			};
+
+			if (vm.Id != null || vm.Id != 0)
+			{
+				item.Id = (int)vm.Id;
+			}
+
 			// Set the object refernece to a corresponding CP or SP
 			// item.SetItem();
 			return item;
@@ -110,9 +116,8 @@ namespace Project2.Models
 		public Order Map(OrderVM orderVM)
 		{
 			var order = new Order {
-				UserId = orderVM.UserId
+				UserId = orderVM.UserId,
 			};
-
 			//potentially that will be entered already
 			if (orderVM.Id != null)
 			{
@@ -125,11 +130,13 @@ namespace Project2.Models
 				order.OrderDate = (DateTime)orderVM.OrderDate;
 			}
 
+			
+
 			foreach (var od in orderVM.OrderDetails)
 			{
 				order.OrderDetails.Add(Map(od));
 			}
-
+			order.Ini(this);
 			return order;
 		}
 

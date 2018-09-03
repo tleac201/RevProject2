@@ -11,5 +11,7 @@ namespace Project2.Models
 		public int UserId { get; set; }
 		public System.DateTime? OrderDate { get; set; }
 		public ICollection<OrderDetailVM> OrderDetails { get; set; }
+
+		
 	}
 }

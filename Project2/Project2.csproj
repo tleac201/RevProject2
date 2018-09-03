@@ -272,13 +272,16 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CustIngredientVM.cs" />
+    <Compile Include="Models\CustomPizza.cs" />
     <Compile Include="Models\CustomPizzaVM.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Mapping.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderDetailVM.cs" />
     <Compile Include="Models\OrderVM.cs" />
     <Compile Include="Models\ShoppingCartItem.cs" />
-    <Compile Include="Models\ShoppingCarViewModels.cs" />
+    <Compile Include="Models\ShoppingCartViewModels.cs" />
+    <Compile Include="Models\StandardProduct.cs" />
     <Compile Include="Order.cs">
       <DependentUpon>Project2Model.tt</DependentUpon>
     </Compile>

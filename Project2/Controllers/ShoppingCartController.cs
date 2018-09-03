@@ -39,9 +39,9 @@ namespace Project2.Controllers
 		}
 
 		// GET: api/ShoppingCart
-		public IQueryable<ShoppingCartItem> GetShoppingCartItems()
+		public ShoppingCartVM GetShoppingCartItems()
 		{
-			return Map.ShoppingCartRepo.RetrieveAll().AsQueryable().Where(x => x.User.UserId == _user.UserId);
+			return new ShoppingCartVM(Map, _user.UserId);
 		}
 
 		// GET: api/ShoppingCart/5

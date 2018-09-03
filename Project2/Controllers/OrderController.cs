@@ -27,80 +27,81 @@ namespace Project2.Controllers
 			_user = map.UserRepo.RetrieveById(1);
 		}
 
-        // GET: api/Order
-        public IQueryable<Order> GetOrders()
-        {
+		// GET: api/Order
+		public IQueryable<Order> GetOrders()
+		{
 			return map.OrderRepo.RetrieveAll()
 				.Where(order => order.UserId == _user.UserId
 			).AsQueryable();
-        }
+		}
 
-        // GET: api/Order/5
-        [ResponseType(typeof(Order))]
-        public IHttpActionResult GetOrder(int id)
-        {
+		// GET: api/Order/5
+		[ResponseType(typeof(Order))]
+		public IHttpActionResult GetOrder(int id)
+		{
 			//Order order = db.Orders.Find(id);
 			var order = map.OrderRepo.RetrieveById(id);
 
 			if (order == null)
-            {
-                return NotFound();
-            }
+			{
+				return NotFound();
+			}
 
-			if(order.UserId != _user.UserId)
+			if (order.UserId != _user.UserId)
 			{
 				return Unauthorized();
 			}
 
-            return Ok(order);
-        }
+			return Ok(order);
+		}
 
-        // PUT: api/Order/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutOrder(int id, OrderVM orderVM)
-        {
+		// PUT: api/Order/5
+		[ResponseType(typeof(void))]
+		public IHttpActionResult PutOrder(int id, OrderVM orderVM)
+		{
 			// ModelState
-            if (!ModelState.IsValid && orderVM.Id != null)
-            {
-                return BadRequest(ModelState);
-            }
+			if (!ModelState.IsValid && orderVM.Id != null)
+			{
+				return BadRequest(ModelState);
+			}
 
 			var order = map.OrderRepo.RetrieveById((int)orderVM.Id);
 
-			if(order == null)
+			if (order == null)
 			{
 				return NotFound();
 			}
 
 			// Authorize
 			if (id != orderVM.Id)
-            {
-                return BadRequest();
-            }
+			{
+				return BadRequest();
+			}
 
 			map.OrderRepo.Update(order);
 
-            try
-            {
-                map.OrderRepo.Save();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrderExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+			try
+			{
+				map.OrderRepo.Save();
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				if (!OrderExists(id))
+				{
+					return NotFound();
+				}
+				else
+				{
+					throw;
+				}
+			}
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+			return StatusCode(HttpStatusCode.NoContent);
+		}
 
-        // POST: api/Order
-        [ResponseType(typeof(Order))]
+		/*
+		// POST: api/Order
+		[ResponseType(typeof(Order))]
         public IHttpActionResult PostOrder(OrderVM orderVM)
         {
             if (!ModelState.IsValid)
@@ -141,6 +142,57 @@ namespace Project2.Controllers
 
             return CreatedAtRoute("DefaultApi", new { id = order.Id }, order);
         }
+		*/
+		[ResponseType(typeof(OrderVM))] 
+		[HttpPost]
+		public IHttpActionResult PostOrder()
+		{
+			/*if(UserId != _user.UserId)
+			{
+				return Unauthorized();
+			}*/
+
+			if(map.UserRepo.RetrieveById(_user.UserId) == null)
+			{
+				return NotFound();
+			}
+			var scvm = new ShoppingCartVM(map, _user.UserId);
+
+			// Make an order
+			var order = new Order()
+			{
+				OrderDate = DateTime.Now,
+				UserId = _user.UserId,
+				User = _user,
+			};
+			map.OrderRepo.Insert(order);
+			map.OrderRepo.Save();
+
+			// Make Enter the order details.
+			foreach(var item in scvm.Items)
+			{
+				order.OrderDetails.Add(
+					new OrderDetail
+					{
+						ItemId = item.ProductId,
+						Standard = item.Standard,
+						Quantity = item.Quantity,
+						OrderId = order.Id,
+						Order = order
+					}
+				);
+			}
+			map.OrderDetailsRepo.Save();
+
+			var scitems = map.ShoppingCartRepo.RetrieveAll()
+				.Where(item => item.UserId == _user.UserId);
+			foreach(var item in scitems)
+			{
+				map.ShoppingCartRepo.Delete(item);
+			}
+			map.ShoppingCartRepo.Save();
+			return CreatedAtRoute("DefaultApi", new { id = order.Id }, order);
+		}
 
         // DELETE: api/Order/5
         [ResponseType(typeof(Order))]

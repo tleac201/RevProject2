@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
 using System.Web.Http.Cors;
+//using Auth0.AuthenticationApi;
 
 namespace Project2.Controllers
 {
@@ -12,10 +14,13 @@ namespace Project2.Controllers
 	[Authorize]
     public class ValuesController : ApiController
     {
-        // GET api/values
+        
+		// GET api/values
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+			var u = User.Identity.Name;
+			//ClaimsPrincipal.
+			return new string[] { "value1", "value2", u };
         }
 
         // GET api/values/5
