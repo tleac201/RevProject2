@@ -57,4 +57,24 @@ namespace Project2.DAL
 		CustIngredient RetrieveById(int id);
 		void Save();
 	}
+
+	public interface IOrderRepo : IDisposable
+	{
+		void Insert(Order Order);
+		void Delete(Order Order);
+		void Update(Order Order);
+		IEnumerable<Order> RetrieveAll();
+		Order RetrieveById(int id);
+		void Save();
+	}
+
+	public interface IOrderDetailsRepo : IDisposable
+	{
+		void Insert(OrderDetail OrderDetail);
+		void Delete(OrderDetail OrderDetail);
+		void Update(OrderDetail OrderDetail);
+		IEnumerable<OrderDetail> RetrieveAll();
+		OrderDetail RetrieveById(int id);
+		void Save();
+	}
 }

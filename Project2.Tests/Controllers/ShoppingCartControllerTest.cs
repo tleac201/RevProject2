@@ -10,7 +10,7 @@ namespace Project2.Tests.Controllers
 		private ICollection<ShoppingCartItem> _SCI;
 		private ShoppingCartItem _TestData;
 		private User _user;
-		private ShoppingCartController _controller;
+		//private ShoppingCartController _controller;
 
 		public ShoppingCartControllerTest()
 		{

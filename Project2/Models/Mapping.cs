@@ -13,6 +13,8 @@ namespace Project2.Models
 		public ICustomPizzaRepo CustomPizzaRepo;
 		public IStandardProductRepo StandardProductRepo;
 		public ICustIngredientsRepo CustIngredientsRepo;
+		public IOrderRepo OrderRepo;
+		public IOrderDetailsRepo OrderDetailsRepo;
 
 		public Mapping()
 		{
@@ -22,6 +24,8 @@ namespace Project2.Models
 			CustomPizzaRepo = new CustomPizzaRepo(entities);
 			StandardProductRepo = new StandardProductRepo(entities);
 			CustIngredientsRepo = new CustIngredientsRepo(entities);
+			OrderRepo = new OrderRepo(entities);
+			OrderDetailsRepo = new OrderDetailRepo(entities);
 		}
 
 		#region Shopping Carts
@@ -99,6 +103,86 @@ namespace Project2.Models
 				});
 			}
 			return VM;
+		}
+		#endregion
+
+		#region Orders
+		public Order Map(OrderVM orderVM)
+		{
+			var order = new Order {
+				UserId = orderVM.UserId
+			};
+
+			//potentially that will be entered already
+			if (orderVM.Id != null)
+			{
+				order.Id = (int)orderVM.Id;
+			}
+
+			//potentially entered already
+			if (orderVM.OrderDate != null)
+			{
+				order.OrderDate = (DateTime)orderVM.OrderDate;
+			}
+
+			foreach (var od in orderVM.OrderDetails)
+			{
+				order.OrderDetails.Add(Map(od));
+			}
+
+			return order;
+		}
+
+		public OrderVM Map(Order order)
+		{
+			var orderVM = new OrderVM
+			{
+				Id = order.Id,
+				UserId = order.UserId,
+				OrderDate = order.OrderDate,				
+			};
+
+			//Convert the orderdetail items to be orderdetailvms
+			foreach(var x in order.OrderDetails)
+			{
+				orderVM.OrderDetails.Add(Map(x));
+			}
+
+			return orderVM;
+		}
+		#endregion
+
+		#region OrderDetails
+		public OrderDetailVM Map(OrderDetail orderDetail)
+		{
+			var vm = new OrderDetailVM
+			{
+				Id = orderDetail.Id,
+				ItemId = orderDetail.ItemId,
+				OrderId = orderDetail.OrderId,
+				Quantity = orderDetail.Quantity,
+				Standard = orderDetail.Standard
+			};
+			return vm;
+		}
+
+		public OrderDetail Map(OrderDetailVM orderDetailVM)
+		{
+			var order = new OrderDetail
+			{
+				ItemId = orderDetailVM.ItemId,
+				OrderId = orderDetailVM.OrderId,
+				Quantity = orderDetailVM.Quantity,
+				Standard = orderDetailVM.Standard,				
+			};
+
+			// Incase it's a new item
+			if(null != orderDetailVM.Id)
+			{
+				order.Id = (int) orderDetailVM.Id;
+			}
+
+			return order;
 		}
 		#endregion
 	}

@@ -239,6 +239,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CustomPizzasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\StandardProductsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -251,6 +252,8 @@
     <Compile Include="DAL\CustIngredientsRepo.cs" />
     <Compile Include="DAL\CustomPizzaRepo.cs" />
     <Compile Include="DAL\IRepositoryDeclare.cs" />
+    <Compile Include="DAL\OrderDetailRepo.cs" />
+    <Compile Include="DAL\OrderRepo.cs" />
     <Compile Include="DAL\ShoppingCartRepo.cs" />
     <Compile Include="DAL\StandardProductRepo.cs" />
     <Compile Include="DAL\UserRepo.cs" />
@@ -272,6 +275,8 @@
     <Compile Include="Models\CustomPizzaVM.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Mapping.cs" />
+    <Compile Include="Models\OrderDetailVM.cs" />
+    <Compile Include="Models\OrderVM.cs" />
     <Compile Include="Models\ShoppingCartItem.cs" />
     <Compile Include="Models\ShoppingCarViewModels.cs" />
     <Compile Include="Order.cs">
