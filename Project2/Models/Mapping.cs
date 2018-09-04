@@ -192,5 +192,18 @@ namespace Project2.Models
 			return order;
 		}
 		#endregion
+
+		#region Ingredients
+		public IngredientVM Map(Ingredient ingredient)
+		{
+			return new IngredientVM
+			{
+				IngredientId = ingredient.IngredientId,
+				IngredientName = ingredient.IngredientName,
+				Description = ingredient.Description,
+				Price = ingredient.Price
+			};
+		}
+		#endregion
 	}
 }

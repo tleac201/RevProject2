@@ -13,6 +13,7 @@ namespace Project2.DAL
         void Delete(User user);
         void Update(User user);
         User RetrieveById(int id);
+		User RetrieveByEmail(string name);
         IEnumerable<User> RetrieveAll();
         void Save();
     }

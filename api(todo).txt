@@ -14,7 +14,7 @@ x marks done
 	add quantity standard product to cart						x
 	add quantity custom pizza to cart						x
 	remove n items									x
-	proceed to order
+	proceed to order								X
 	Retrieve									x
 
 /Order
@@ -22,7 +22,7 @@ x marks done
 *	set delivery (carry out or delivery)
 	Cancel (return items to shopping cart)
 	Cancel selected items
-	order
+	order										X
 
 /CustomPizza
 	add ingredient									x

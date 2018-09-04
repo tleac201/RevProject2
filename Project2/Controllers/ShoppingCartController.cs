@@ -27,7 +27,8 @@ namespace Project2.Controllers
 
 		public ShoppingCartController()
 		{
-			_user = Map.UserRepo.RetrieveById(1);
+			var username = this.User.Identity.Name;
+			_user = Map.UserRepo.RetrieveByEmail(username);
 		}
 
 		public ShoppingCartController(IUserRepository user

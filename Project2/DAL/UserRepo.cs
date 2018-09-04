@@ -28,6 +28,12 @@ namespace Project2.DAL
 			return user;
         }
 
+		public User RetrieveByEmail(string name)
+		{
+			var user = db.Users.SingleOrDefault(u => u.Email == name);
+			return user;
+		}
+
         public void Insert(User user)
         {
             db.Users.Add(user);

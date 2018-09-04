@@ -239,6 +239,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CustomPizzasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IngredientsController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\StandardProductsController.cs" />
@@ -275,6 +276,7 @@
     <Compile Include="Models\CustomPizza.cs" />
     <Compile Include="Models\CustomPizzaVM.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Ingredient.cs" />
     <Compile Include="Models\Mapping.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderDetailVM.cs" />

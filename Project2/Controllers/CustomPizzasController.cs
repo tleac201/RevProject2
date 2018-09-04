@@ -23,7 +23,9 @@ namespace Project2.Controllers
 
 		CustomPizzasController()
 		{
-			user = map.UserRepo.RetrieveById(1);
+			var username = this.User.Identity.Name;
+			user = map.UserRepo.RetrieveByEmail(username);
+			//user = map.UserRepo.RetrieveById(1);
 		}
         // GET: api/CustomPizzas
         public IQueryable<CustomPizza> GetCustomPizzas()

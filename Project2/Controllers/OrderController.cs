@@ -24,7 +24,8 @@ namespace Project2.Controllers
 		public OrderController()
 		{
 			map = new Mapping();
-			_user = map.UserRepo.RetrieveById(1);
+			var username = this.User.Identity.Name;
+			_user = map.UserRepo.RetrieveByEmail(username);
 		}
 
 		// GET: api/Order
