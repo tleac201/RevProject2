@@ -95,6 +95,11 @@ namespace Project2.Tests.DAL
             // TODO: uncomment the following line if the finalizer is overridden above.
             // GC.SuppressFinalize(this);
         }
-        #endregion
-    }
+
+		public User RetrieveByEmail(string name)
+		{
+			throw new NotImplementedException();
+		}
+		#endregion
+	}
 }

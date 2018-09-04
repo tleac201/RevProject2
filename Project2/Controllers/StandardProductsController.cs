@@ -7,12 +7,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using Project2;
 
 namespace Project2.Controllers
 {
-    public class StandardProductsController : ApiController
+	[EnableCors(origins: "*", headers: "*", methods: "*")]
+	public class StandardProductsController : ApiController
     {
         private Project2Entities db = new Project2Entities();
 

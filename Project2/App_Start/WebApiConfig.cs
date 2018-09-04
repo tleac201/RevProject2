@@ -25,6 +25,9 @@ namespace Project2
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-        }
+
+			// New code -- coors
+			config.EnableCors();
+		}
     }
 }

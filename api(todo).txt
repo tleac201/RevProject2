@@ -1,37 +1,34 @@
 x marks done
 /Account
-	logon				x
-	logoff				x
-	register			x
-	R
-	U
+	logon										x
+	logoff										x
+	register									x	
+	R										x
+	U										x
 	D
 
 /Standard item
-	Retrieve List
-	add quantity to cart
-	add single to cart
+	Retrieve List									x
 	
 /Shopping cart
-	remove item
-	remove n items
-	proceed to order
-	Retrieve
+	add quantity standard product to cart						x
+	add quantity custom pizza to cart						x
+	remove n items									x
+	proceed to order								X
+	Retrieve									x
 
 /Order
-	pay? (needs to add delivery fees)
-	set delivery (carry out or delivery)
+*	pay? (needs to add delivery fees)
+*	set delivery (carry out or delivery)
 	Cancel (return items to shopping cart)
 	Cancel selected items
-	order
+	order										X
 
 /CustomPizza
-	add ingredient
-	subtract ingredient
-	add to shopping cart?
-	add n to shopping cart?
-	c
-	r
-	u
-	d (set inactive)
-	cancel (set inactive)?
+	add ingredient									x
+	subtract ingredient								x
+	c										x
+	r										x
+	u										x
+	d (set inactive)								x
+	cancel (set inactive)?								

@@ -20,19 +20,23 @@ using Project2.DAL;
 using System.Diagnostics;
 using System.Text;
 using System.Net;
+using System.Web.Http.Cors;
 
 namespace Project2.Controllers
 {
-    [Authorize]
+	[EnableCors(origins: "*", headers: "*", methods: "*")]
+	[Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";
         private ApplicationUserManager _userManager;
         private IUserRepository _userRepo;
-
-        public AccountController() : this(new UserRepo())
+		private Mapping map;
+        public AccountController()
         {
+			this.map = new Mapping();
+			_userRepo = map.UserRepo;
         }
 
         public AccountController(IUserRepository userRepository)
@@ -442,22 +446,34 @@ namespace Project2.Controllers
             return User;
         }
 
-        // PUT api/Account/5
+        // PUT api/Account/User user
         // edit account info
         [AllowAnonymous]
         public IHttpActionResult Put(User user)
         {
-            // TO DO: Authenticate user
-            var User = _userRepo.RetrieveById(user.UserId);
+			// TO DO: Authenticate user
 
-            //Only these attributes may be edited
-            User.FirstName = user.FirstName;
-            User.LastName = user.LastName;
-            User.Phone = (string)user.Phone;
-            _userRepo.Update(User);
-            _userRepo.Save();
-                    
-            return Ok();
+			if(!ModelState.IsValid)
+			{
+				return Content(HttpStatusCode.BadRequest, "Bad request.");
+			}
+
+			var User = _userRepo.RetrieveById(user.UserId);
+            if (User != null)
+            {
+                //Only these attributes may be edited
+                User.FirstName = user.FirstName;
+                User.LastName = user.LastName;
+                User.Phone = (string)user.Phone;
+                _userRepo.Update(User);
+                _userRepo.Save();
+
+                return Ok();
+            }
+            else
+            {
+				return BadRequest();
+            }
         }
         
         // POST api/Account/RegisterExternal

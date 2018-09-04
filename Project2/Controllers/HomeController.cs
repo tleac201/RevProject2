@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http.Cors;
 using System.Web.Mvc;
 
 namespace Project2.Controllers
 {
-    public class HomeController : Controller
+	[EnableCors(origins: "*", headers: "*", methods: "*")]
+	public class HomeController : Controller
     {
         public ActionResult Index()
         {
