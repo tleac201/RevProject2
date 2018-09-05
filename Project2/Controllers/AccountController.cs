@@ -25,7 +25,6 @@ using System.Web.Http.Cors;
 namespace Project2.Controllers
 {
 	[EnableCors(origins: "*", headers: "*", methods: "*")]
-	[Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {

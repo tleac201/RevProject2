@@ -15,6 +15,7 @@ using Project2.Models;
 
 namespace Project2.Controllers
 {
+	// [Authorize]
 	[EnableCors(origins: "*", headers: "*", methods: "*")]
 	[RoutePrefix("api/Order")]
 	public class OrderController : ApiController
@@ -24,8 +25,10 @@ namespace Project2.Controllers
 		public OrderController()
 		{
 			map = new Mapping();
-			var username = this.User.Identity.Name;
+			/*var username = this.User.Identity.Name;
 			_user = map.UserRepo.RetrieveByEmail(username);
+			*/
+			_user = map.UserRepo.RetrieveById(1);
 		}
 
 		// GET: api/Order

@@ -11,20 +11,21 @@ using System.Web.Http.Cors;
 namespace Project2.Controllers
 {
 	[EnableCors(origins: "*", headers:"*", methods:"*")]
-	[Authorize]
+	//[Authorize]
     public class ValuesController : ApiController
     {
         
 		// GET api/values
         public IEnumerable<string> Get()
         {
-			var u = User.Identity.Name;
+			return new string[] { "value1", "value2" };
 			//ClaimsPrincipal.
-			return new string[] { "value1", "value2", u };
-        }
+			//var u = User.Identity.Name;
+			//return new string[] { "value1", "value2", u };
+		}
 
-        // GET api/values/5
-        public string Get(int id)
+		// GET api/values/5
+		public string Get(int id)
         {
             return "value";
         }

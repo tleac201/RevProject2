@@ -15,6 +15,7 @@ using Project2.Models;
 
 namespace Project2.Controllers
 {
+	// [Authorize]
 	[EnableCors(origins: "*", headers: "*", methods: "*")]
 	public class CustomPizzasController : ApiController
     {
@@ -23,9 +24,9 @@ namespace Project2.Controllers
 
 		CustomPizzasController()
 		{
-			var username = this.User.Identity.Name;
-			user = map.UserRepo.RetrieveByEmail(username);
-			//user = map.UserRepo.RetrieveById(1);
+			// var username = this.User.Identity.Name;
+			// user = map.UserRepo.RetrieveByEmail(username);
+			user = map.UserRepo.RetrieveById(1);
 		}
         // GET: api/CustomPizzas
         public IQueryable<CustomPizza> GetCustomPizzas()

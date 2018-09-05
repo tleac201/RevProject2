@@ -20,6 +20,7 @@ using Project2.Models;
 namespace Project2.Controllers
 {
 	[EnableCors(origins: "*", headers: "*", methods: "*")]
+	// [Authorize]
 	public class ShoppingCartController : ApiController
 	{
 		public User _user;
@@ -27,8 +28,9 @@ namespace Project2.Controllers
 
 		public ShoppingCartController()
 		{
-			var username = this.User.Identity.Name;
-			_user = Map.UserRepo.RetrieveByEmail(username);
+			//var username = this.User.Identity.Name;
+			//_user = Map.UserRepo.RetrieveByEmail(username);
+			_user = Map.UserRepo.RetrieveById(1);
 		}
 
 		public ShoppingCartController(IUserRepository user
