@@ -111,15 +111,11 @@ namespace Project2.Controllers
 				return BadRequest(ModelState);
 			}
 
-			if(shoppingCartItemVM.UserId != _user.UserId)
-			{
-				return Unauthorized();
-			}
-
 			shoppingCartItemVM.DatePlaced = DateTime.Now;
 
 			// Map VM to an actual item.
 			var mappedShoppingCartItem = Map.Map(shoppingCartItemVM);
+			mappedShoppingCartItem.UserId = _user.UserId;
 
 			// Check if there is already a quantity of the product in the shopping cart
 			// for the user.
@@ -129,16 +125,22 @@ namespace Project2.Controllers
 				&& QItem.Standard == mappedShoppingCartItem.Standard
 			).SingleOrDefault();
 
-			// If there are already matching items - BadRequest
+			// If there are already matching items
 			if(shoppingCartItem != null)
 			{
-				return BadRequest("Edit quantities in shopping cart. Don't order more.");
+				shoppingCartItem.Quantity += shoppingCartItemVM.Quantity;
+				shoppingCartItem.DatePlaced = DateTime.Now;
+				shoppingCartItem.UserId = _user.UserId;
+				Map.ShoppingCartRepo.Update(shoppingCartItem);
 			}
-
-			//All is well. Make an item
-			shoppingCartItem = Map.Map(shoppingCartItemVM);
-			shoppingCartItem.DatePlaced = DateTime.Now;
-			Map.ShoppingCartRepo.Insert(shoppingCartItem);
+			else
+			{
+				// Make an item
+				shoppingCartItem = Map.Map(shoppingCartItemVM);
+				shoppingCartItem.DatePlaced = DateTime.Now;
+				shoppingCartItem.UserId = _user.UserId;
+				Map.ShoppingCartRepo.Insert(shoppingCartItem);
+			}
 			Map.ShoppingCartRepo.Save();
 				
 			return CreatedAtRoute("DefaultApi", new { id = shoppingCartItem.Id }, shoppingCartItem);

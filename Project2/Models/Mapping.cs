@@ -36,12 +36,15 @@ namespace Project2.Models
 				ProductId = vm.ProductId,
 				Quantity = vm.Quantity,
 				Standard = vm.Standard,
-				User = UserRepo.RetrieveById(vm.UserId),
 				DatePlaced = DateTime.Now,
-				UserId = vm.UserId,
 			};
 
-			if (vm.Id != null || vm.Id != 0)
+			if(vm.UserId != null)
+			{
+				item.UserId = (int)vm.UserId;
+			}
+
+			if (vm.Id != null)
 			{
 				item.Id = (int)vm.Id;
 			}

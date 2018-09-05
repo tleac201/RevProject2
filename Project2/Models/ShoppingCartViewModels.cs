@@ -8,7 +8,7 @@ namespace Project2.Models
 	public class ShoppingCartItemVM
 	{
 		public int? Id { get; set; }
-		public int UserId { get; set; }
+		public int? UserId { get; set; }
 		public int ProductId { get; set; }
 		public DateTime? DatePlaced { get; set; }
 		public bool Standard { get; set; }
