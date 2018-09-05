@@ -1,7 +1,4 @@
-﻿// TO DO
-
-/* Unstatically code user1 */
-
+﻿/* Unstatically code user1 */
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
